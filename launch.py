@@ -2,13 +2,15 @@
 
 # Modules
 import os
+import sys
 import json
 from flask import Flask
 
 # Initialization
-config_file = os.path.join(os.path.dirname(__file__), "config.json")
+tdir = os.path.dirname(__file__ if not getattr(sys, "frozen", False) else sys.executable)
+config_file = os.path.join(tdir, "config.json")
 if not os.path.isfile(config_file):
-    exit("Missing configuration file!")
+    sys.exit("Missing configuration file!")
 
 with open(config_file, "r") as fh:
     data = json.loads(fh.read())
